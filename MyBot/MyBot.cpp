@@ -23,7 +23,7 @@ int main()
             if (ev.msg.channel_id == 806724162369355826) {
                 for (size_t x = 0; x < ev.msg.attachments.size(); x++) {
 
-                    ev.msg.attachments.at(x).download([str = ev.msg.attachments.at(x), &bot, cid = ev.msg.channel_id, mid = ev.msg.id, username = ev.msg.author.username](const dpp::http_request_completion_t& k) {
+                    ev.msg.attachments.at(x).download([str = ev.msg.attachments.at(x), &bot, cid = ev.msg.channel_id, mid = ev.msg.id, username = ev.msg.author.username, content = ev.msg.content](const dpp::http_request_completion_t& k) {
 
                         if (k.error != dpp::http_error::h_success) {
 
@@ -32,7 +32,7 @@ int main()
 
                         }
                         std::string title = "`" + username + "` enviou um arquivo!";
-                        std::string description = "Link para o download do arquivo: " + str.url;
+                        std::string description = "`Mensagem:`\n```" + content + "```Link para o download do arquivo: " + str.url;
                         dpp::embed embed = dpp::embed().
                             set_color(0x9900ff).
                             set_title(title).
