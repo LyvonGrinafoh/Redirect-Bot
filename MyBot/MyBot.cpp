@@ -32,14 +32,21 @@ int main()
 
                         }
                         std::string title = "`" + username + "` enviou um arquivo!";
-                        std::string description = "`Mensagem:`\n```" + content + "```Link para o download do arquivo: " + str.url;
+                        size_t content_test = content.size();
+                        int ccontent_test = content_test;
+                        std::string description;
+                        if (ccontent_test > 0) {
+                            description = "`Mensagem:`\n```" + content + "```Link para o download do arquivo: " + str.url;
+                        }
+                        else {
+                            description = "Link para o download do arquivo: " + str.url;
+                        }
                         dpp::embed embed = dpp::embed().
                             set_color(0x9900ff).
                             set_title(title).
                             set_description(description).
                             set_image(str.url.c_str()).
-                            set_timestamp(time(0));;
-
+                            set_timestamp(time(0));;                        
                         bot.message_create(dpp::message(CHANNEL_1_ID, embed));
                         bot.message_create(dpp::message(CHANNEL_2_ID, embed));
                         bot.message_delete(mid, cid, [](const dpp::confirmation_callback_t& u) {
